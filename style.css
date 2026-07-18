@@ -1,0 +1,17 @@
+body {
+    background-color: #e6f7ff;
+    font-family: "Yu Gothic", sans-serif;
+    text-align: center;
+}
+
+h1 {
+    color: #0066cc;
+}
+
+p {
+    font-size: 20px;
+}
+
+ul {
+    list-style: none;
+}
