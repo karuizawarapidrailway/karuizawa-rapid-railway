@@ -12,7 +12,7 @@
       color: #333;
     }
 
-    /* ナビゲーションメニューのスタイル */
+    /* ナビゲーションメニュー */
     .main-nav {
       background-color: #0d47a1;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -21,7 +21,6 @@
       border-radius: 8px;
       overflow: hidden;
     }
-
     .main-nav ul {
       list-style: none;
       margin: 0;
@@ -29,14 +28,8 @@
       display: flex;
       justify-content: space-around;
       align-items: center;
-      flex-wrap: nowrap;
     }
-
-    .main-nav li {
-      flex: 1;
-      text-align: center;
-    }
-
+    .main-nav li { flex: 1; text-align: center; }
     .main-nav a {
       display: block;
       padding: 14px 8px;
@@ -45,17 +38,117 @@
       font-size: 14px;
       font-weight: bold;
       white-space: nowrap;
-      transition: background-color 0.2s ease, color 0.2s ease;
+      transition: background-color 0.2s ease;
       border-right: 1px solid rgba(255, 255, 255, 0.15);
     }
+    .main-nav li:last-child a { border-right: none; }
+    .main-nav a:hover { background-color: #1976d2; }
 
-    .main-nav li:last-child a {
-      border-right: none;
+    /* 全体レイアウト */
+    .container {
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 0 20px;
     }
 
-    .main-nav a:hover {
-      background-color: #1976d2;
-      color: #ffffff;
+    /* セクション見出し */
+    .section-title {
+      font-size: 24px;
+      color: #0f172a;
+      border-bottom: 3px solid #1e88e5;
+      padding-bottom: 8px;
+      margin-top: 40px;
+      margin-bottom: 20px;
+    }
+
+    /* 車両カード */
+    .train-card {
+      background: white;
+      border-radius: 12px;
+      padding: 25px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 25px;
+    }
+
+    @media (max-width: 768px) {
+      .train-card { grid-template-columns: 1fr; }
+    }
+
+    /* サムネイル・ボタンエリア */
+    .train-media { text-align: center; }
+    .train-thumb {
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      object-fit: cover;
+    }
+    .scratch-btn {
+      display: inline-block;
+      margin-top: 12px;
+      background-color: #ffab19;
+      color: white;
+      font-weight: bold;
+      padding: 10px 16px;
+      border-radius: 20px;
+      text-decoration: none;
+      font-size: 13px;
+      transition: background 0.2s;
+    }
+    .scratch-btn:hover { background-color: #e69500; }
+
+    /* 詳細テキストエリア */
+    .train-info h3 {
+      margin: 0 0 10px 0;
+      font-size: 22px;
+      color: #0f172a;
+      border-bottom: 2px solid #448aff;
+      padding-bottom: 6px;
+    }
+    .author-tag {
+      font-size: 13px;
+      color: #64748b;
+      margin-bottom: 15px;
+    }
+    .author-tag a, .user-link {
+      color: #1e88e5;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .author-tag a:hover, .user-link:hover { text-decoration: underline; }
+
+    /* スペック表 */
+    .spec-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin-bottom: 15px;
+    }
+    .spec-table th, .spec-table td {
+      padding: 6px 10px;
+      border: 1px solid #e2e8f0;
+      text-align: left;
+    }
+    .spec-table th {
+      background-color: #f1f5f9;
+      color: #334155;
+      width: 30%;
+      white-space: nowrap;
+    }
+
+    /* メモ・補足ボックス */
+    .memo-box {
+      background-color: #fff8e1;
+      border-left: 4px solid #ffc107;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: #5d4037;
+      border-radius: 0 6px 6px 0;
+      margin-top: 10px;
+      line-height: 1.5;
     }
   </style>
 </head>
@@ -72,7 +165,7 @@
     </div>
   </header>
 
-  <!-- 統一ナビゲーションメニュー -->
+  <!-- 統一ナビゲーション -->
   <nav class="main-nav">
     <ul>
       <li><a href="index.html">🏠 トップ</a></li>
@@ -84,24 +177,310 @@
     </ul>
   </nav>
 
-  <!-- メインコンテンツ -->
-  <main style="text-align: center; padding: 30px 20px;">
-    <h2 style="font-size: 24px; color: #1e293b;">🚃 車両紹介</h2>
-    
-    <p style="font-size: 18px; color: #666; margin-top: 30px; line-height: 1.8;">
-      ただいま新しい車両の紹介ページを公開に向けて準備しております。<br>
-      <a href="https://scratch.mit.edu/projects/1273917291" target="_blank" style="color: #448aff; font-weight: bold;">公式スクラッチプロジェクト</a> に掲載中です。そちらをご覧ください。
-    </p>
+  <div class="container">
+    <h1 style="font-size: 26px; color: #0f172a; margin-bottom: 10px;">🚃 車両紹介</h1>
+    <p style="color: #64748b; margin-bottom: 30px;">軽井沢高速鉄道で活躍・導入されている鉄道車両およびバス車両の一覧です。</p>
 
-    <p style="font-size: 16px; color: #999;">
-      今しばらくお待ちください！
-    </p>
+    <!-- 鉄道車両セクション -->
+    <h2 class="section-title">🚆 鉄道車両</h2>
 
-    <!-- 🔙 トップに戻る（デザイン統一版） -->
+    <!-- ① 3000系 -->
+    <div class="train-card">
+      <div class="train-media">
+        <img class="train-thumb" src="https://uploads.scratch.mit.edu/get_image/project/1215539665_480x360.png" alt="3000系">
+        <a href="https://scratch.mit.edu/projects/1215539665" target="_blank" class="scratch-btn">🚀 Scratchで見る</a>
+      </div>
+      <div class="train-info">
+        <h3>① 3000系</h3>
+        <div class="author-tag">作成者: <a href="https://scratch.mit.edu/users/seibu2071f" target="_blank">@seibu2071f</a></div>
+        <table class="spec-table">
+          <tr><th>運用者 / 製造所</th><td>軽井沢高速鉄道 / 城急車両製作所佐野事業所</td></tr>
+          <tr><th>製造年 / 製造数</th><td>2025年 / 60両 (4・6両編成)</td></tr>
+          <tr><th>運用開始</th><td>2025年10月2日</td></tr>
+          <tr><th>軌間 / 電気方式</th><td>1067mm / 直流 1500V（架空電車線方式）</td></tr>
+          <tr><th>最高 / 設計速度</th><td>110km/h / 125km/h</td></tr>
+          <tr><th>加減速度</th><td>起動: 3.0km/h/s / 減速: 4.0km/h/s</td></tr>
+          <tr><th>車体寸法</th><td>全長20m × 幅2770mm × 高さ4016mm (床面高1130mm)</td></tr>
+          <tr><th>車体構造 / 台車</th><td>ステンレス / 軸梁式ボルスタレス台車</td></tr>
+          <tr><th>制御 / ブレーキ</th><td>中京IGBTVVVFインバータ / 純電気式指令ブレーキ</td></tr>
+          <tr><th>保安装置</th><td>ATS-P, ATC</td></tr>
+        </table>
+        <div class="memo-box">
+          💡 <strong>メモ：</strong>車番の例（例: 3101）… 最初の「3」が3000系、「1」が1両目、「01」が第1編成を表します。
+        </div>
+      </div>
+    </div>
+
+    <!-- ② 185系 -->
+    <div class="train-card">
+      <div class="train-media">
+        <img class="train-thumb" src="https://uploads.scratch.mit.edu/get_image/project/1216110864_480x360.png" alt="185系">
+        <a href="https://scratch.mit.edu/projects/1216110864" target="_blank" class="scratch-btn">🚀 Scratchで見る</a>
+      </div>
+      <div class="train-info">
+        <h3>② 185系</h3>
+        <div class="author-tag">作成者: <a href="https://scratch.mit.edu/users/seibu2071f" target="_blank">@seibu2071f</a></div>
+        <p style="font-size: 13px; color: #475569; line-height: 1.6; margin-bottom: 12px;">
+          185系200番台（B3, B4, B5, B6編成）を廃車直前にJRから譲渡してもらい、耐寒仕様に変更したうえで塗装変更を行いました。モノクラス6両編成で運用されています。
+        </p>
+        <table class="spec-table">
+          <tr><th>最高速度</th><td>110km/h</td></tr>
+          <tr><th>加減速度</th><td>起動: 2.0km/h/s / 減速: 3.5km/h/s</td></tr>
+          <tr><th>保安装置</th><td>第1〜3編成：ATS-P, ATC<br>第4編成(B6)：ATC, D-ATC, ATS-P, 西武ATS, ATACS, ATO</td></tr>
+        </table>
+        <div class="memo-box">
+          💡 <strong>メモ：</strong><a href="https://scratch.mit.edu/users/e3komati" target="_blank" class="user-link">@e3komati</a> さんの185系を改造しました！B6編成は保安装置ガン積み仕様です！
+        </div>
+      </div>
+    </div>
+
+    <!-- ③ 3000系 ハロウィンラッピング -->
+    <div class="train-card">
+      <div class="train-media">
+        <img class="train-thumb" src="https://uploads.scratch.mit.edu/get_image/project/1231945914_480x360.png" alt="3000系 ハロウィンラッピング">
+        <a href="https://scratch.mit.edu/projects/1231945914" target="_blank" class="scratch-btn">🚀 Scratchで見る</a>
+      </div>
+      <div class="train-info">
+        <h3>③ 3000系 ハロウィンラッピング</h3>
+        <div class="author-tag">作成者: <a href="https://scratch.mit.edu/users/ghyw00002036" target="_blank">@ghyw00002036</a></div>
+        <p style="font-size: 14px; color: #334155; line-height: 1.6; background: #f8fafc; padding: 12px; border-radius: 6px; border: 1px solid #e2e8f0;">
+          🎃 軽井沢高速鉄道にて、10/26 〜 11/20 までの期間限定でハロウィンラッピングされた電車が1編成運行されます！
+        </p>
+      </div>
+    </div>
+
+    <!-- ④ 3000系1000番代 -->
+    <div class="train-card">
+      <div class="train-media">
+        <img class="train-thumb" src="https://uploads.scratch.mit.edu/get_image/project/1233652395_480x360.png" alt="3000系1000番代">
+        <a href="https://scratch.mit.edu/projects/1233652395" target="_blank" class="scratch-btn">🚀 Scratchで見る</a>
+      </div>
+      <div class="train-info">
+        <h3>④ 3000系1000番代</h3>
+        <div class="author-tag">作成者: <a href="https://scratch.mit.edu/users/tyosakukennng" target="_blank">@tyosakukennng</a></div>
+        <table class="spec-table">
+          <tr><th>運用者 / 製造所</th><td>軽井沢高速鉄道 / 軽井沢高速鉄道車両製作所</td></tr>
+          <tr><th>製造年 / 製造数</th><td>2025年 / 60両 (2・4・6両編成)</td></tr>
+          <tr><th>運用開始</th><td>2025年度内に運行予定</td></tr>
+          <tr><th>軌間 / 電気方式</th><td>1067mm / 交直流 1500V（交直両用・相互直通対応）</td></tr>
+          <tr><th>最高 / 設計速度</th><td>110km/h / 125km/h</td></tr>
+          <tr><th>車体寸法</th><td>全長20m × 幅2770mm × 高さ4016mm (2階建て車:4070mm)</td></tr>
+          <tr><th>車体構造 / ドア</th><td>ステンレス / 両開きドア採用</td></tr>
+          <tr><th>制御 / 保安装置</th><td>中京IGBTVVVFインバータ / ATS-P, ATC</td></tr>
+        </table>
+        <div class="memo-box">
+          💡 <strong>メモ：</strong>カラーは軽井沢高速鉄道のロゴカラーを再現！2階建てグリーン車を組み込み、交流・直流の相互直通運転に対応しています。（JR車がベース）
+        </div>
+      </div>
+    </div>
+
+    <!-- ⑤ クリスマスラッピング車両 -->
+    <div class="train-card">
+      <div class="train-media">
+        <img class="train-thumb" src="https://uploads.scratch.mit.edu/get_image/project/1246845515_480x360.png" alt="クリスマスラッピング車両">
+        <a href="https://scratch.mit.edu/projects/1246845515" target="_blank" class="scratch-btn">🚀 Scratchで見る</a>
+      </div>
+      <div class="train-info">
+        <h3>⑤ クリスマスラッピング車両</h3>
+        <div class="author-tag">作成者: <a href="https://scratch.mit.edu/users/tyosakukennng" target="_blank">@tyosakukennng</a></div>
+        
+        <div style="background: #fdf2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 12px; font-size: 13px; color: #991b1b; margin-bottom: 10px;">
+          <strong>🎫 きっぷのご案内：</strong><br>
+          12月22日〜12月27日の間、当社券売機にて発売予定！当社線の全区間で有効です。<br>
+          <span style="font-size: 11px; color: #b91c1c;">※西武鉄道ではご利用いただけません。直通列車で西武線内に入る場合は精算をお願いします。</span>
+        </div>
+
+        <div class="memo-box">
+          ⚠️ <strong>注意：</strong>軽井沢高速鉄道は架空鉄道です。実際の西武鉄道様への相互直通運転などは行っておりません。
+        </div>
+      </div>
+    </div>
+
+    <!-- ⑥ KR103系 -->
+    <div class="train-card">
+      <div class="train-media">
+        <img class="train-thumb" src="https://uploads.scratch.mit.edu/get_image/project/1256988858_480x360.png" alt="KR103系">
+        <a href="https://scratch.mit.edu/projects/1256988858" target="_blank" class="scratch-btn">🚀 Scratchで見る</a>
+      </div>
+      <div class="train-info">
+        <h3>⑥ KR103系</h3>
+        <div class="author-tag">作成者: <a href="https://scratch.mit.edu/users/seibu2071f" target="_blank">@seibu2071f</a></div>
+        <table class="spec-table">
+          <tr><th>導入数</th><td>6両 × 5編成 導入決定</td></tr>
+          <tr><th>最高速度</th><td>130km/h</td></tr>
+          <tr><th>車体仕様</th><td>20m 4ドア</td></tr>
+          <tr><th>保安装置</th><td>ATS-P搭載</td></tr>
+        </table>
+        <div class="memo-box">
+          💡 <strong>メモ：</strong>横浜沿岸高速鉄道様より譲渡を受けた車両です。
+        </div>
+      </div>
+    </div>
+
+    <!-- ⑦ 検測車 3900系 -->
+    <div class="train-card">
+      <div class="train-media">
+        <img class="train-thumb" src="https://uploads.scratch.mit.edu/get_image/project/1268024192_480x360.png" alt="検測車 3900系">
+        <a href="https://scratch.mit.edu/projects/1268024192" target="_blank" class="scratch-btn">🚀 Scratchで見る</a>
+      </div>
+      <div class="train-info">
+        <h3>⑦ 検測車 3900系</h3>
+        <div class="author-tag">作成者: <a href="https://scratch.mit.edu/users/seibu2071f" target="_blank">@seibu2071f</a></div>
+        <table class="spec-table">
+          <tr><th>運用者 / 製造所</th><td>軽井沢高速鉄道 / 城急車両製作所佐野事業所</td></tr>
+          <tr><th>改造年 / 改造数</th><td>2025年 / 4両 (4両編成)</td></tr>
+          <tr><th>運用開始</th><td>2026年1月24日</td></tr>
+          <tr><th>軌間 / 電気方式</th><td>1067mm / 直流 1500V（架空電車線方式）</td></tr>
+          <tr><th>最高 / 設計速度</th><td>110km/h / 125km/h</td></tr>
+          <tr><th>車体構造 / 制御</th><td>ステンレス / 中京IGBTVVVFインバータ制御</td></tr>
+          <tr><th>保安装置</th><td>ATS-P, ATC</td></tr>
+        </table>
+        <div class="memo-box">
+          💡 <strong>メモ：</strong>軽井沢高速鉄道の検測車です。車番の例（3901）…「39」が3900系、「1」が1両目、「1」が第1編成を表します。
+        </div>
+      </div>
+    </div>
+
+    <!-- ⑧ 10000系（城急車両製作所製） -->
+    <div class="train-card">
+      <div class="train-media">
+        <img class="train-thumb" src="https://uploads.scratch.mit.edu/get_image/project/1268475235_480x360.png" alt="10000系">
+        <a href="https://scratch.mit.edu/projects/1268475235" target="_blank" class="scratch-btn">🚀 Scratchで見る</a>
+      </div>
+      <div class="train-info">
+        <h3>⑧ 10000系</h3>
+        <div class="author-tag">作成者: <a href="https://scratch.mit.edu/users/TOBU_N100" target="_blank">@TOBU_N100</a></div>
+        <table class="spec-table">
+          <tr><th>運用者 / 製造所</th><td>軽井沢高速鉄道株式会社 / 城急車両製作所佐野事業所</td></tr>
+          <tr><th>製造年 / 編成</th><td>2026年 / 10両編成</td></tr>
+          <tr><th>最高 / 設計速度</th><td>110km/h / 130km/h</td></tr>
+          <tr><th>車体構造 / 主電動機</th><td>アルミニウム合金 ダブルスキン構造 / PMSM永久磁石同期電動機</td></tr>
+          <tr><th>保安装置</th><td>YP-ATC, ATS-P, ATC-P, ATO, CBTC</td></tr>
+          <tr><th>車内設備</th><td>2画面LCD（三菱製セサミクロ）、調光LED照明、L型ワンハンドルマスコン</td></tr>
+        </table>
+        <div class="memo-box">
+          💡 <strong>メモ：</strong>一体感を重視した近未来的な美しい流線型デザイン。高機能LEDライトを採用し、どこから見ても美しく乗りたくなる車両を目指しています。
+        </div>
+      </div>
+    </div>
+
+    <!-- ⑨ 8000系 新車案 -->
+    <div class="train-card">
+      <div class="train-media">
+        <img class="train-thumb" src="https://uploads.scratch.mit.edu/get_image/project/1287435547_480x360.png" alt="8000系 新車案">
+        <a href="https://scratch.mit.edu/projects/1287435547" target="_blank" class="scratch-btn">🚀 Scratchで見る</a>
+      </div>
+      <div class="train-info">
+        <h3>⑨ 8000系 新車案</h3>
+        <div class="author-tag">作成者: <a href="https://scratch.mit.edu/users/TOBU_N100" target="_blank">@TOBU_N100</a></div>
+        <table class="spec-table">
+          <tr><th>運用者 / 製造所</th><td>軽井沢高速鉄道 / 城急車両製作所佐野事業所</td></tr>
+          <tr><th>製造年 / 製造数</th><td>2026年 / 5両 (6両編成)</td></tr>
+          <tr><th>最高 / 設計速度</th><td>110km/h / 120km/h</td></tr>
+          <tr><th>車体 / ドア</th><td>アルミ合金 / 4ドア (個別ドアスイッチ付)</td></tr>
+          <tr><th>制御 / モーター</th><td>IGBT素子VVVFインバータ / 全閉式かご形三相誘導電動機</td></tr>
+          <tr><th>保安装置</th><td>ATS-P, YP-DATC</td></tr>
+          <tr><th>設備</th><td>全車フリースペース、17インチワイド2画面LCD、フルカラーLED行先表示</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- ⑩ 新中部鉄道 S700系 -->
+    <div class="train-card">
+      <div class="train-media">
+        <img class="train-thumb" src="https://uploads.scratch.mit.edu/get_image/project/1318151212_480x360.png" alt="S700系">
+        <a href="https://scratch.mit.edu/projects/1318151212" target="_blank" class="scratch-btn">🚀 Scratchで見る</a>
+      </div>
+      <div class="train-info">
+        <h3>⑩ 新中部鉄道 S700系</h3>
+        <div class="author-tag">作成者: <a href="https://scratch.mit.edu/users/tyosakukennng" target="_blank">@tyosakukennng</a></div>
+        <p style="font-size: 13px; color: #475569; margin-bottom: 10px;">
+          <strong>キャッチコピー：</strong>「シンプルなのにシャープでかっこいい。ついに誕生、S700系」<br>
+          軽井沢高速鉄道線との相互直通運転のために設計された直通対応車両です。
+        </p>
+        <table class="spec-table">
+          <tr><th>運用者 / 製造所</th><td>新中部鉄道 / 長野重工</td></tr>
+          <tr><th>製造年 / 運用開始</th><td>2026年〜2030年 (10両×100本) / 2026年6月1日</td></tr>
+          <tr><th>最高 / 設計速度</th><td>130km/h / 160km/h</td></tr>
+          <tr><th>電化方式</th><td>直流1500V / 交流20000V (交直両用)</td></tr>
+          <tr><th>保安装置</th><td>YP-DATC(軽高速線用), ATC, ATC-P, CBTC, ATO, ATS, TASC</td></tr>
+          <tr><th>設備</th><td>N-LINER用Wi-Fi・セミクロスシート改造、地下鉄直通対応、抗菌仕様</td></tr>
+        </table>
+        <div class="memo-box">
+          💡 <strong>クレジット：</strong>車両:<a href="https://scratch.mit.edu/users/KEAF-" target="_blank" class="user-link">@KEAF-</a>様 / 部品:<a href="https://scratch.mit.edu/users/E233_3000" target="_blank" class="user-link">@E233_3000</a>様 / 長野重工ロゴ:<a href="https://scratch.mit.edu/users/Yukiwao" target="_blank" class="user-link">@Yukiwao</a>様
+        </div>
+      </div>
+    </div>
+
+    <!-- ⑪ 10000系（KR車輌製造製） -->
+    <div class="train-card">
+      <div class="train-media">
+        <img class="train-thumb" src="https://uploads.scratch.mit.edu/get_image/project/1329576925_480x360.png" alt="10000系">
+        <a href="https://scratch.mit.edu/projects/1329576925" target="_blank" class="scratch-btn">🚀 Scratchで見る</a>
+      </div>
+      <div class="train-info">
+        <h3>⑪ 10000系（KR車輌製造版）</h3>
+        <div class="author-tag">作成者: <a href="https://scratch.mit.edu/users/TOBU_N100" target="_blank">@TOBU_N100</a></div>
+        <table class="spec-table">
+          <tr><th>運用者 / 製造所</th><td>軽井沢高速鉄道株式会社 / KR車輌製造</td></tr>
+          <tr><th>製造年 / 編成</th><td>2026年〜 / 10両編成</td></tr>
+          <tr><th>最高 / 設計速度</th><td>110km/h / 130km/h</td></tr>
+          <tr><th>車体構造 / モーター</th><td>アルミニウム合金 ダブルスキン構造 / PMSM永久磁石同期電動機</td></tr>
+          <tr><th>保安装置</th><td>YP-ATC, ATS-P, ATC-P, ATO, CBTC</td></tr>
+          <tr><th>速度計・表示</th><td>LCD(設備状況表示2画面＆速度表示。故障時バックアップ機能付)</td></tr>
+        </table>
+        <div class="memo-box">
+          💡 <strong>コンセプト：</strong>“cool design” — 流線型最上位デザインと近未来感を兼ね備え、時代の求める快適な移動を提供します。
+        </div>
+      </div>
+    </div>
+
+    <!-- ⑫ 20000系特急形電車 -->
+    <div class="train-card">
+      <div class="train-media">
+        <img class="train-thumb" src="https://uploads.scratch.mit.edu/get_image/project/1352913439_480x360.png" alt="20000系特急形電車">
+        <a href="https://scratch.mit.edu/projects/1352913439" target="_blank" class="scratch-btn">🚀 Scratchで見る</a>
+      </div>
+      <div class="train-info">
+        <h3>⑫ 20000系特急形電車</h3>
+        <div class="author-tag">作成者: <a href="https://scratch.mit.edu/users/hamusuta-toreinn1207" target="_blank">@hamusuta-toreinn1207</a></div>
+        <table class="spec-table">
+          <tr><th>形式</th><td>20000系特急形電車 (直流)</td></tr>
+          <tr><th>製造年 / 製造数</th><td>1970年〜1975年 / 5編成30両</td></tr>
+          <tr><th>最高 / 設計速度</th><td>100km/h / 115km/h</td></tr>
+          <tr><th>保安装置</th><td>ATS-c</td></tr>
+        </table>
+      </div>
+    </div>
+
+
+    <!-- バス車両セクション -->
+    <h2 class="section-title">🚌 バス車両</h2>
+
+    <!-- ⑬ 軽井沢バス車両 -->
+    <div class="train-card">
+      <div class="train-media">
+        <img class="train-thumb" src="https://uploads.scratch.mit.edu/get_image/project/1362531464_480x360.png" alt="軽井沢バス車両">
+        <a href="https://scratch.mit.edu/projects/1362531464" target="_blank" class="scratch-btn">🚀 Scratchで見る</a>
+      </div>
+      <div class="train-info">
+        <h3>⑬ 軽井沢バス 路線バス車両</h3>
+        <div class="author-tag">作成者: <a href="https://scratch.mit.edu/users/tyosakukennng" target="_blank">@tyosakukennng</a></div>
+        <p style="font-size: 14px; color: #334155; line-height: 1.6; background: #f8fafc; padding: 12px; border-radius: 6px; border: 1px solid #e2e8f0;">
+          軽井沢高速鉄道グループの子会社「軽井沢バス」にて運行されている路線バス車両です。駅からの二次交通や地域輸送を担っています。
+        </p>
+        <div class="memo-box">
+          💡 <strong>クレジット：</strong>バス車体素材: <a href="https://scratch.mit.edu/users/-HY_96-" target="_blank" class="user-link">@-HY_96-</a> 様
+        </div>
+      </div>
+    </div>
+
+    <!-- 🔙 トップに戻る -->
     <div style="text-align: center; margin-top: 40px; margin-bottom: 40px;">
       <a href="index.html" style="background: #448aff; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; display: inline-block;">← トップページへ戻る</a>
     </div>
-  </main>
+
+  </div>
 
 </body>
 </html>
