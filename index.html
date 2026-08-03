@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>トップページ | 軽井沢高速鉄道</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="logo.png">
   <style>
     body {
       background-color: #f4f6f9;
@@ -75,6 +74,39 @@
       margin-bottom: 20px;
     }
 
+    /* サイト更新履歴リスト */
+    .news-list {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      list-style: none;
+      margin: 0 0 30px 0;
+    }
+    .news-item {
+      padding: 12px 0;
+      border-bottom: 1px solid #e2e8f0;
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      font-size: 14px;
+    }
+    .news-item:last-child { border-bottom: none; }
+    .news-date {
+      color: #64748b;
+      font-weight: bold;
+      min-width: 90px;
+      font-size: 13px;
+    }
+    .news-badge {
+      background-color: #e0f2fe;
+      color: #0369a1;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
     /* Scratch リンクカード */
     .scratch-card {
       background: white;
@@ -89,6 +121,7 @@
 
     @media (max-width: 768px) {
       .scratch-card { grid-template-columns: 1fr; }
+      .news-item { flex-direction: column; align-items: flex-start; gap: 5px; }
     }
 
     .scratch-media { text-align: center; }
@@ -199,6 +232,26 @@
         Scratch（スクラッチ）にて制作したプロジェクトや関連作品も随時公開しています！
       </p>
     </div>
+
+    <!-- 📌 サイト更新情報 -->
+    <h2 class="section-title">📌 サイト更新情報</h2>
+    <ul class="news-list">
+      <li class="news-item">
+        <span class="news-date">2026/08/03</span>
+        <span class="news-badge">更新</span>
+        <span>車両紹介ページに①〜⑬までの全車両データ・バス車両を追加しました。</span>
+      </li>
+      <li class="news-item">
+        <span class="news-date">2026/08/03</span>
+        <span class="news-badge">NEW</span>
+        <span>@TOBU_N100様制作の特設Canvaサイトへのリンクを追加しました。</span>
+      </li>
+      <li class="news-item">
+        <span class="news-date">2026/08/01</span>
+        <span class="news-badge">開設</span>
+        <span>軽井沢高速鉄道 公式Webサイトを開設・リニューアルしました！</span>
+      </li>
+    </ul>
 
     <!-- 公式Scratchプロジェクト紹介 -->
     <h2 class="section-title">🚀 公式 Scratch プロジェクト</h2>
