@@ -1,137 +1,257 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>軽井沢高速鉄道</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="logo.png">
-</head>
+  <meta charset="UTF-8">
+  <title>トップページ | 軽井沢高速鉄道</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="logo.png">
+  <style>
+    body {
+      background-color: #f4f6f9;
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      margin: 0;
+      color: #333;
+    }
 
+    /* ナビゲーションメニュー */
+    .main-nav {
+      background-color: #0d47a1;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      margin: 20px auto;
+      max-width: 1000px;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .main-nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+    .main-nav li { flex: 1; text-align: center; }
+    .main-nav a {
+      display: block;
+      padding: 14px 8px;
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: bold;
+      white-space: nowrap;
+      transition: background-color 0.2s ease;
+      border-right: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    .main-nav li:last-child a { border-right: none; }
+    .main-nav a:hover { background-color: #1976d2; }
+
+    /* コンテナ */
+    .container {
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+
+    /* 注意書きバナー */
+    .disclaimer-banner {
+      background-color: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #991b1b;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    /* セクションタイトル */
+    .section-title {
+      font-size: 22px;
+      color: #0f172a;
+      border-bottom: 3px solid #448aff;
+      padding-bottom: 8px;
+      margin-top: 35px;
+      margin-bottom: 20px;
+    }
+
+    /* Scratch リンクカード */
+    .scratch-card {
+      background: white;
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 25px;
+      margin-bottom: 25px;
+    }
+
+    @media (max-width: 768px) {
+      .scratch-card { grid-template-columns: 1fr; }
+    }
+
+    .scratch-media { text-align: center; }
+    .scratch-thumb {
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      object-fit: cover;
+    }
+
+    .scratch-btn {
+      display: inline-block;
+      margin-top: 12px;
+      background-color: #ffab19;
+      color: white;
+      font-weight: bold;
+      padding: 10px 18px;
+      border-radius: 20px;
+      text-decoration: none;
+      font-size: 14px;
+      transition: background 0.2s;
+    }
+    .scratch-btn:hover { background-color: #e69500; }
+
+    .studio-btn {
+      display: inline-block;
+      background-color: #48525c;
+      color: white;
+      font-weight: bold;
+      padding: 12px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 15px;
+      transition: background 0.2s;
+    }
+    .studio-btn:hover { background-color: #2c3238; }
+
+    .canva-btn {
+      display: inline-block;
+      background-color: #00c4cc;
+      color: white;
+      font-weight: bold;
+      padding: 12px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 15px;
+      transition: background 0.2s;
+    }
+    .canva-btn:hover { background-color: #009aa0; }
+
+    /* ユーザーリンク */
+    .user-link {
+      color: #1e88e5;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .user-link:hover { text-decoration: underline; }
+
+    /* フッター */
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      background-color: #1e293b;
+      color: #94a3b8;
+      font-size: 12px;
+      margin-top: 60px;
+    }
+  </style>
+</head>
 <body>
 
-   <!-- 🚆 軽井沢高速鉄道 公式ヘッダー -->
-<header style="background-color: #448aff; color: white; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 20px; border-radius: 8px;">
-  <div style="display: flex; align-items: center; gap: 15px;">
-    <!-- ロゴ画像（白背景の丸枠に入れてロゴを目立たせます） -->
-    <div style="background-color: white; padding: 6px; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
-      <img src="logo.png" alt="ロゴ" style="height: 45px; display: block;">
+  <!-- 公式ヘッダー -->
+  <header style="background-color: #448aff; color: white; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between;">
+    <div style="display: flex; align-items: center; gap: 15px;">
+      <img src="logo.png" alt="ロゴ" style="height: 40px; background: white; padding: 4px; border-radius: 6px;">
+      <div>
+        <h1 style="margin:0; font-size: 20px; color:white;">軽井沢高速鉄道</h1>
+        <span style="font-size: 10px; color: #e3f2fd;">Karuizawa Rapid Railway</span>
+      </div>
     </div>
-    <div>
-      <h1 style="margin: 0; font-size: 22px; color: white; line-height: 1.2;">軽井沢高速鉄道</h1>
-      <span style="font-size: 11px; color: #e3f2fd; letter-spacing: 1px;">Karuizawa Rapid Railway</span>
+  </header>
+
+  <!-- 統一ナビゲーション -->
+  <nav class="main-nav">
+    <ul>
+      <li><a href="index.html">🏠 トップ</a></li>
+      <li><a href="rosenzu.html">🗺️ 路線図</a></li>
+      <li><a href="sharyo.html">🚃 車両紹介</a></li>
+      <li><a href="eki.html">🚉 駅一覧</a></li>
+      <li><a href="syain.html">👥 社員紹介</a></li>
+      <li><a href="news.html">📢 お知らせ</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+
+    <!-- ⚠️ 架空鉄道の注記バナー -->
+    <div class="disclaimer-banner">
+      ⚠️ 当ウェブサイトは「架空の鉄道会社」のファンコンテンツです。実在の鉄道会社・機関とは一切関係ありません。
     </div>
+
+    <!-- メインビジュアル / ご挨拶 -->
+    <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); text-align: center; margin-bottom: 30px;">
+      <h2 style="margin-top: 0; color: #0f172a; font-size: 24px;">軽井沢高速鉄道 公式Webサイトへようこそ！</h2>
+      <p style="color: #475569; line-height: 1.8; margin-bottom: 0;">
+        軽井沢高速鉄道の路線情報、車両スペック、最新ニュースをお届けする公式サイトです。<br>
+        Scratch（スクラッチ）にて制作したプロジェクトや関連作品も随時公開しています！
+      </p>
+    </div>
+
+    <!-- 公式Scratchプロジェクト紹介 -->
+    <h2 class="section-title">🚀 公式 Scratch プロジェクト</h2>
+    
+    <div class="scratch-card">
+      <div class="scratch-media">
+        <img class="scratch-thumb" src="https://uploads.scratch.mit.edu/get_image/project/1273917291_480x360.png" alt="公式スクラッチプロジェクト">
+        <a href="https://scratch.mit.edu/projects/1273917291" target="_blank" class="scratch-btn">🎮 Scratchで遊ぶ・見る</a>
+      </div>
+      <div class="scratch-info">
+        <h3 style="margin: 0 0 10px 0; font-size: 20px; color: #0f172a;">軽井沢高速鉄道 公式プロジェクト</h3>
+        <p style="color: #475569; font-size: 14px; line-height: 1.7;">
+          軽井沢高速鉄道のシミュレーターや車両・路線データが遊べるメインプロジェクトです！<br>
+          直接Scratch上で操作したり、作品の全貌をチェックすることができます。
+        </p>
+      </div>
+    </div>
+
+    <!-- 公式Scratchスタジオ案内 -->
+    <h2 class="section-title">📁 公式 Scratch スタジオ</h2>
+    
+    <div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); text-align: center; margin-bottom: 30px;">
+      <p style="color: #475569; font-size: 15px; margin-bottom: 20px; line-height: 1.6;">
+        軽井沢高速鉄道に関連するすべての車両、路線、企画作品がまとまっている公式スタジオはこちらです！
+      </p>
+      <a href="https://scratch.mit.edu/" target="_blank" class="studio-btn">
+        📁 公式 Scratch スタジオを開く ↗
+      </a>
+    </div>
+
+    <!-- 🎨 Canva作品サイト案内 -->
+    <h2 class="section-title">🎨 特設コンテンツ (Canva Web)</h2>
+    
+    <div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); text-align: center;">
+      <h3 style="margin: 0 0 8px 0; font-size: 20px; color: #0f172a;">軽井沢高速鉄道 特設紹介サイト</h3>
+      <div style="font-size: 13px; color: #64748b; margin-bottom: 15px;">
+        作成者: <a href="https://scratch.mit.edu/users/TOBU_N100" target="_blank" class="user-link">@TOBU_N100</a> 様
+      </div>
+      <p style="color: #475569; font-size: 14px; line-height: 1.7; margin-bottom: 20px;">
+        Canvaで制作された軽井沢高速鉄道の特設Webサイトです！ビジュアル豊かにデザインされた紹介ページをご覧いただけます。
+      </p>
+      <a href="https://karuizawakosoku-scratch.my.canva.site/" target="_blank" class="canva-btn">
+        ✨ 特設Canvaサイトを見る ↗
+      </a>
+    </div>
+
   </div>
 
-
-</header>
-
-    <!-- 🟢 アコーディオン式の運行情報 -->
-<details style="background-color: #fffde7; border: 2px solid #fbc02d; border-radius: 8px; max-width: 600px; margin: 20px auto; text-align: left; overflow: hidden; cursor: pointer;">
-  
-  <!-- 押す前（タイトル部分） -->
-  <summary style="padding: 12px; font-weight: bold; outline: none; user-select: none;">
-     運行情報：全線で平常通り運転しております。（クリックで詳細）
-  </summary>
-
-  <!-- ポチッと押したら下に広がる部分 -->
-  <div style="background-color: #ffffff; padding: 12px 20px; border-top: 1px solid #fbc02d; font-size: 0.95em;">
-    <p style="margin: 5px 0;"><strong>🚃軽井沢本線：</strong> 🟢 平常運転</p>
-    <p style="margin: 5px 0;"><strong>🚃中鉄秩父線：</strong> 🟢 平常運転</p>
-    <p style="margin: 5px 0;"><strong>🚌KRバス：</strong> 🟢 平常運転</p>
-  </div>
-
-</details>
-
-   <!-- ▼ ここから新しいナビゲーションバー ▼ -->
-<style>
-  /* ナビゲーション全体のデザイン */
-  .main-nav {
-    background-color: #0d47a1; /* 深い青色（または #1e293b などのダークカラー） */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin: 20px auto;
-    max-width: 1000px;
-    border-radius: 8px;
-    overflow: hidden;
-  }
-
-  .main-nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    flex-wrap: nowrap; /* 改行を防止 */
-  }
-
-  .main-nav li {
-    flex: 1;
-    text-align: center;
-  }
-
-  .main-nav a {
-    display: block;
-    padding: 14px 8px;
-    color: #ffffff;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: bold;
-    white-space: nowrap; /* 文字が途中で切れないようにする */
-    transition: background-color 0.2s ease, color 0.2s ease;
-    border-right: 1px solid rgba(255, 255, 255, 0.15); /* 区切り線 */
-  }
-
-  /* 一番右の項目の区切り線を消す */
-  .main-nav li:last-child a {
-    border-right: none;
-  }
-
-  /* マウスを乗せた（タップした）時の色 */
-  .main-nav a:hover {
-    background-color: #1976d2;
-    color: #ffffff;
-  }
-</style>
-
-<nav class="main-nav">
-  <ul>
-    <li><a href="index.html">🏠 トップ</a></li>
-    <li><a href="rosenzu.html">🗺️ 路線図</a></li>
-    <li><a href="sharyo.html">🚃 車両紹介</a></li>
-    <li><a href="eki.html">🚉 駅一覧</a></li>
-    <li><a href="syain.html">👥 社員紹介</a></li>
-    <li><a href="news.html">📢 お知らせ</a></li>
-  </ul>
-</nav>
-<!-- ▲ ここまで ▲ -->
-
-    <h2>公式スクラッチスタジオ</h2>
-👮
-    <u1><a href="https://scratch.mit.edu/studios/50885905/" target="_blank">https://scratch.mit.edu/studios/50885905/</a>
-
-        <h2>公式スクラッチプロジェクト</h2>
-
-         <iframe src="https://scratch.mit.edu/projects/1273917291/embed" allowtransparency="true" width="485" height="402" frameborder="0" scrolling="no" allowfullscreen></iframe>
-
-
-</body>
-
-<!-- ① まず本編（路線図とかロゴとか）が終わる -->
-
-<hr> <!-- 区切り線 -->
-
-<!-- ② 次に「更新日」と「コメント欄」が来る（まだ本編の一部） -->
-<p style="text-align: right; color: gray;">更新日：2026年8月03日</p>
-
-<p style="font-size: 13px; color: #94a3b8; margin-bottom: 10px;">
-      サイト作成者<a href="https://scratch.mit.edu/users/1-2-3-4-5-aa-sub" target="_blank" style="color: #60a5fa; text-decoration: none; font-weight: bold;">@1-2-3-4-5-aa-sub</a>
-    </p>
-
-<!-- 👤 ③ 一番最後！画面の最下部に「著作権マーク」を入れる -->
-<footer style="text-align: center; margin-top: 50px; color: gray; font-size: 0.8em;">
-    <p>© 2025 軽井沢高速鉄道 All Rights Reserved.</p>
-</footer>
+  <!-- フッター -->
+  <footer>
+    <p style="margin: 0 0 8px 0; font-weight: bold; color: #cbd5e1;">軽井沢高速鉄道 (Karuizawa Rapid Railway)</p>
+    <p style="margin: 0; color: #64748b;">※当サイトに掲載されている情報はすべて架空のものであり、実在の団体・人物・駅等とは関係ありません。</p>
+  </footer>
 
 </body>
 </html>
