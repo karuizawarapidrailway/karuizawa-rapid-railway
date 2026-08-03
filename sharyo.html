@@ -1,54 +1,107 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>車両紹介 | 軽井沢高速鉄道</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="logo.png">
+  <meta charset="UTF-8">
+  <title>車両紹介 | 軽井沢高速鉄道</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      background-color: #f4f6f9;
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      margin: 0;
+      color: #333;
+    }
+
+    /* ナビゲーションメニューのスタイル */
+    .main-nav {
+      background-color: #0d47a1;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      margin: 20px auto;
+      max-width: 1000px;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .main-nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      flex-wrap: nowrap;
+    }
+
+    .main-nav li {
+      flex: 1;
+      text-align: center;
+    }
+
+    .main-nav a {
+      display: block;
+      padding: 14px 8px;
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: bold;
+      white-space: nowrap;
+      transition: background-color 0.2s ease, color 0.2s ease;
+      border-right: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .main-nav li:last-child a {
+      border-right: none;
+    }
+
+    .main-nav a:hover {
+      background-color: #1976d2;
+      color: #ffffff;
+    }
+  </style>
 </head>
 <body>
 
-    <!-- 🚆 軽井沢高速鉄道 公式ヘッダー -->
-<header style="background-color: #448aff; color: white; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 20px; border-radius: 8px;">
-  <div style="display: flex; align-items: center; gap: 15px;">
-    <!-- ロゴ画像 -->
-    <div style="background-color: white; padding: 6px; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
-      <img src="PNG/logo.png" alt="ロゴ" style="height: 45px; display: block;">
+  <!-- 公式ヘッダー -->
+  <header style="background-color: #448aff; color: white; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between;">
+    <div style="display: flex; align-items: center; gap: 15px;">
+      <img src="logo.png" alt="ロゴ" style="height: 40px; background: white; padding: 4px; border-radius: 6px;">
+      <div>
+        <h1 style="margin:0; font-size: 20px; color:white;">軽井沢高速鉄道</h1>
+        <span style="font-size: 10px; color: #e3f2fd;">Karuizawa Rapid Railway</span>
+      </div>
     </div>
-    <div>
-      <h1 style="margin: 0; font-size: 22px; color: white; line-height: 1.2;">軽井沢高速鉄道</h1>
-      <span style="font-size: 11px; color: #e3f2fd; letter-spacing: 1px;">Karuizawa Rapid Railway</span>
-    </div>
-  </div>
+  </header>
 
-  <!-- 🌐 右側の言語表示（シンプル版） -->
-  <div style="font-size: 12px; display: flex; gap: 5px; background-color: rgba(255,255,255,0.2); padding: 4px 8px; border-radius: 20px; align-items: center;">
-    <span style="background-color: white; color: #448aff; padding: 2px 8px; border-radius: 12px; font-weight: bold;">日本語</span>
-    <span style="color: white; padding: 2px 8px; opacity: 0.8;">English</span>
-  </div>
-</header>
+  <!-- 統一ナビゲーションメニュー -->
+  <nav class="main-nav">
+    <ul>
+      <li><a href="index.html">🏠 トップ</a></li>
+      <li><a href="rosenzu.html">🗺️ 路線図</a></li>
+      <li><a href="sharyo.html">🚃 車両紹介</a></li>
+      <li><a href="eki.html">🚉 駅一覧</a></li>
+      <li><a href="syain.html">👥 社員紹介</a></li>
+      <li><a href="news.html">📢 お知らせ</a></li>
+    </ul>
+  </nav>
 
-    <!-- ここに他のページと同じメニュー（ナビゲーション）をそのまま残す -->
-    <header>
-        <!-- いま使っているメニューのコード（<nav>など）をここにそのまま貼り付けてください -->
-    </header>
+  <!-- メインコンテンツ -->
+  <main style="text-align: center; padding: 30px 20px;">
+    <h2 style="font-size: 24px; color: #1e293b;">🚃 車両紹介</h2>
+    
+    <p style="font-size: 18px; color: #666; margin-top: 30px; line-height: 1.8;">
+      ただいま新しい車両の紹介ページを公開に向けて準備しております。<br>
+      <a href="https://scratch.mit.edu/projects/1273917291" target="_blank" style="color: #448aff; font-weight: bold;">公式スクラッチプロジェクト</a> に掲載中です。そちらをご覧ください。
+    </p>
 
-    <main style="text-align: center; padding: 50px 20px;">
-        <h2>🚃 車両紹介</h2>
-        <p style="font-size: 18px; color: #666; margin-top: 30px;">
-            ただいま新しい車両の紹介ページを公開に向けて準備しております。<br>
-            <u1><a href="https://scratch.mit.edu/projects/1273917291" target="_blank">公式スクラッチプロジェクト</a>に掲載中です。そちらをご覧ください。
-        </p>
-        <p style="font-size: 16px; color: #999;">
-            今しばらくお待ちください！
-        </p>
-        
-        <!-- 🔙 トップに戻る -->
-    <div style="text-align: center; margin-top: 40px;">
+    <p style="font-size: 16px; color: #999;">
+      今しばらくお待ちください！
+    </p>
+
+    <!-- 🔙 トップに戻る（デザイン統一版） -->
+    <div style="text-align: center; margin-top: 40px; margin-bottom: 40px;">
       <a href="index.html" style="background: #448aff; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; display: inline-block;">← トップページへ戻る</a>
     </div>
-    </main>
+  </main>
 
 </body>
 </html>
