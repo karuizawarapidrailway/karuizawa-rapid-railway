@@ -385,7 +385,7 @@
       function loadComments() {
         let comments = JSON.parse(localStorage.getItem("site_comments") || "[]");
         if (comments.length === 0) {
-          comments = [{ name: "管理者", text: "軽井沢高速鉄道へようこそ！ご意見や感想を書いてね！", date: "2026/8/11 21:00" }];
+          comments = [{ name: "管理者", text: "軽井沢高速鉄道へようこそ！ご意見や感想を書いてね！ 悪質なコメントは絶対におやめください", date: "2026/8/11 21:00" }];
         }
         renderComments(comments);
       }
