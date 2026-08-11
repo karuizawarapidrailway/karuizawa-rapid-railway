@@ -373,7 +373,7 @@
     <p style="margin: 0; color: #64748b;">※当サイトに掲載されている情報はすべて架空のものであり、実在の団体・人物・駅等とは関係ありません。</p>
   </footer>
 
-  <!-- コメント機能用JavaScript（削除機能付き） -->
+  <!-- コメント＆返信機能用JavaScript -->
   <script>
     document.addEventListener("DOMContentLoaded", function() {
       const btn = document.getElementById("send-btn");
@@ -381,36 +381,74 @@
       const textInput = document.getElementById("comment-text");
       const list = document.getElementById("comment-list");
 
-      // 保存されたコメントをロード
-      function loadComments() {
+      // コメントデータの取得
+      function getComments() {
         let comments = JSON.parse(localStorage.getItem("site_comments") || "[]");
         if (comments.length === 0) {
-          comments = [{ name: "管理者", text: "軽井沢高速鉄道へようこそ！ご意見や感想を書いてね！", date: "2026/8/11 21:00" }];
+          comments = [{
+            name: "管理者",
+            text: "軽井沢高速鉄道へようこそ！ご意見や感想を書いてね！",
+            date: "2026/8/11 21:00",
+            replies: []
+          }];
         }
-        renderComments(comments);
+        return comments;
       }
 
-      // コメントを描画（削除ボタン付き）
-      function renderComments(comments) {
+      // コメント＆返信の描画
+      function renderComments() {
+        const comments = getComments();
         list.innerHTML = "";
-        comments.forEach(function(c, index) {
+
+        comments.forEach(function(c, parentIndex) {
+          if (!c.replies) c.replies = [];
+
           const item = document.createElement("div");
           item.style.cssText = "background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0;";
+
+          // 返信一覧のHTML生成
+          let repliesHTML = "";
+          c.replies.forEach(function(r, replyIndex) {
+            repliesHTML += `
+              <div style="background: #ffffff; padding: 10px 12px; border-radius: 6px; border: 1px solid #cbd5e1; margin-top: 8px; margin-left: 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                  <strong style="color: #0f172a; font-size: 13px;">💬 ${escapeHTML(r.name)}</strong>
+                  <div>
+                    <span style="color: #94a3b8; font-size: 11px; margin-right: 6px;">${r.date}</span>
+                    <button onclick="deleteReply(${parentIndex}, ${replyIndex})" style="background: #ef4444; color: white; border: none; padding: 2px 6px; border-radius: 4px; font-size: 10px; cursor: pointer; font-weight: bold;">削除</button>
+                  </div>
+                </div>
+                <p style="margin: 0; color: #334155; font-size: 13px; line-height: 1.4; white-space: pre-wrap;">${escapeHTML(r.text)}</p>
+              </div>
+            `;
+          });
+
           item.innerHTML = `
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
               <strong style="color: #0f172a; font-size: 14px;">${escapeHTML(c.name)}</strong>
               <div>
                 <span style="color: #94a3b8; font-size: 12px; margin-right: 8px;">${c.date}</span>
-                <button onclick="deleteComment(${index})" style="background: #ef4444; color: white; border: none; padding: 3px 8px; border-radius: 4px; font-size: 11px; cursor: pointer; font-weight: bold;">削除</button>
+                <button onclick="toggleReplyForm(${parentIndex})" style="background: #0284c7; color: white; border: none; padding: 3px 8px; border-radius: 4px; font-size: 11px; cursor: pointer; font-weight: bold; margin-right: 4px;">返信</button>
+                <button onclick="deleteComment(${parentIndex})" style="background: #ef4444; color: white; border: none; padding: 3px 8px; border-radius: 4px; font-size: 11px; cursor: pointer; font-weight: bold;">削除</button>
               </div>
             </div>
             <p style="margin: 0; color: #334155; font-size: 14px; line-height: 1.5; white-space: pre-wrap;">${escapeHTML(c.text)}</p>
+
+            <!-- 返信投稿フォーム（初期状態は非表示） -->
+            <div id="reply-form-${parentIndex}" style="display: none; margin-top: 12px; padding: 10px; background: #e0f2fe; border-radius: 6px;">
+              <input type="text" id="reply-name-${parentIndex}" placeholder="お名前" style="width: 100%; padding: 6px; margin-bottom: 6px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; box-sizing: border-box;">
+              <textarea id="reply-text-${parentIndex}" rows="2" placeholder="返信を入力..." style="width: 100%; padding: 6px; margin-bottom: 6px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; box-sizing: border-box; resize: vertical;"></textarea>
+              <button onclick="sendReply(${parentIndex})" style="background: #0284c7; color: white; border: none; padding: 4px 12px; border-radius: 4px; font-size: 12px; font-weight: bold; cursor: pointer;">返信する</button>
+            </div>
+
+            <!-- 返信一覧を表示 -->
+            ${repliesHTML}
           `;
           list.appendChild(item);
         });
       }
 
-      // 投稿処理
+      // 新規親コメント投稿
       btn.addEventListener("click", function() {
         const name = nameInput.value.trim() || "匿名さん";
         const text = textInput.value.trim();
@@ -423,22 +461,64 @@
         const now = new Date();
         const dateStr = now.getFullYear() + "/" + (now.getMonth() + 1) + "/" + now.getDate() + " " + now.getHours().toString().padStart(2, '0') + ":" + now.getMinutes().toString().padStart(2, '0');
 
-        let comments = JSON.parse(localStorage.getItem("site_comments") || "[]");
-        comments.unshift({ name: name, text: text, date: dateStr });
+        let comments = getComments();
+        comments.unshift({ name: name, text: text, date: dateStr, replies: [] });
         localStorage.setItem("site_comments", JSON.stringify(comments));
 
         nameInput.value = "";
         textInput.value = "";
-        renderComments(comments);
+        renderComments();
       });
 
-      // 削除処理（グローバル関数化）
+      // 返信フォームの開閉
+      window.toggleReplyForm = function(index) {
+        const form = document.getElementById(`reply-form-${index}`);
+        form.style.display = form.style.display === "none" ? "block" : "none";
+      };
+
+      // 返信送信処理
+      window.sendReply = function(parentIndex) {
+        const replyName = document.getElementById(`reply-name-${parentIndex}`).value.trim() || "匿名さん";
+        const replyText = document.getElementById(`reply-text-${parentIndex}`).value.trim();
+
+        if (!replyText) {
+          alert("返信内容を入力してください！");
+          return;
+        }
+
+        const now = new Date();
+        const dateStr = now.getFullYear() + "/" + (now.getMonth() + 1) + "/" + now.getDate() + " " + now.getHours().toString().padStart(2, '0') + ":" + now.getMinutes().toString().padStart(2, '0');
+
+        let comments = getComments();
+        if (!comments[parentIndex].replies) comments[parentIndex].replies = [];
+
+        comments[parentIndex].replies.push({
+          name: replyName,
+          text: replyText,
+          date: dateStr
+        });
+
+        localStorage.setItem("site_comments", JSON.stringify(comments));
+        renderComments();
+      };
+
+      // 親コメント削除
       window.deleteComment = function(index) {
-        if (confirm("このコメントを削除してもよろしいですか？")) {
-          let comments = JSON.parse(localStorage.getItem("site_comments") || "[]");
+        if (confirm("このコメント（返信含む）を削除してもよろしいですか？")) {
+          let comments = getComments();
           comments.splice(index, 1);
           localStorage.setItem("site_comments", JSON.stringify(comments));
-          renderComments(comments);
+          renderComments();
+        }
+      };
+
+      // 返信のみ削除
+      window.deleteReply = function(parentIndex, replyIndex) {
+        if (confirm("この返信を削除してもよろしいですか？")) {
+          let comments = getComments();
+          comments[parentIndex].replies.splice(replyIndex, 1);
+          localStorage.setItem("site_comments", JSON.stringify(comments));
+          renderComments();
         }
       };
 
@@ -448,7 +528,7 @@
         });
       }
 
-      loadComments();
+      renderComments();
     });
   </script>
 </body>
