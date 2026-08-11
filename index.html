@@ -373,7 +373,7 @@
     <p style="margin: 0; color: #64748b;">※当サイトに掲載されている情報はすべて架空のものであり、実在の団体・人物・駅等とは関係ありません。</p>
   </footer>
 
-  <!-- コメント機能用JavaScript -->
+  <!-- コメント機能用JavaScript（削除機能付き） -->
   <script>
     document.addEventListener("DOMContentLoaded", function() {
       const btn = document.getElementById("send-btn");
@@ -385,21 +385,24 @@
       function loadComments() {
         let comments = JSON.parse(localStorage.getItem("site_comments") || "[]");
         if (comments.length === 0) {
-          comments = [{ name: "管理者", text: "軽井沢高速鉄道へようこそ！ご意見や感想を書いてね！悪質なコメントは絶対におやめください", date: "2026/8/11 21:00" }];
+          comments = [{ name: "管理者", text: "軽井沢高速鉄道へようこそ！ご意見や感想を書いてね！", date: "2026/8/11 21:00" }];
         }
         renderComments(comments);
       }
 
-      // コメントを描画
+      // コメントを描画（削除ボタン付き）
       function renderComments(comments) {
         list.innerHTML = "";
-        comments.forEach(function(c) {
+        comments.forEach(function(c, index) {
           const item = document.createElement("div");
           item.style.cssText = "background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0;";
           item.innerHTML = `
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
               <strong style="color: #0f172a; font-size: 14px;">${escapeHTML(c.name)}</strong>
-              <span style="color: #94a3b8; font-size: 12px;">${c.date}</span>
+              <div>
+                <span style="color: #94a3b8; font-size: 12px; margin-right: 8px;">${c.date}</span>
+                <button onclick="deleteComment(${index})" style="background: #ef4444; color: white; border: none; padding: 3px 8px; border-radius: 4px; font-size: 11px; cursor: pointer; font-weight: bold;">削除</button>
+              </div>
             </div>
             <p style="margin: 0; color: #334155; font-size: 14px; line-height: 1.5; white-space: pre-wrap;">${escapeHTML(c.text)}</p>
           `;
@@ -428,6 +431,16 @@
         textInput.value = "";
         renderComments(comments);
       });
+
+      // 削除処理（グローバル関数化）
+      window.deleteComment = function(index) {
+        if (confirm("このコメントを削除してもよろしいですか？")) {
+          let comments = JSON.parse(localStorage.getItem("site_comments") || "[]");
+          comments.splice(index, 1);
+          localStorage.setItem("site_comments", JSON.stringify(comments));
+          renderComments(comments);
+        }
+      };
 
       function escapeHTML(str) {
         return str.replace(/[&<>'"]/g, function(tag) {
