@@ -305,6 +305,99 @@
 
   </div>
 
+  <!-- 💬 簡易コメント掲示板 -->
+<h2 class="section-title">💬 コメント欄</h2>
+
+<div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); margin-bottom: 30px;">
+  
+  <!-- 投稿フォーム -->
+  <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px;">
+    <input type="text" id="comment-name" placeholder="お名前（Scratchユーザー名など）" style="padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px;">
+    <textarea id="comment-text" rows="3" placeholder="コメントを入力してください..." style="padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; resize: vertical;"></textarea>
+    <button onclick="addComment()" style="background-color: #1e88e5; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; align-self: flex-end; transition: background 0.2s;">
+      コメントを投稿する
+    </button>
+  </div>
+
+  <!-- コメント表示エリア -->
+  <div id="comment-list" style="display: flex; flex-direction: column; gap: 15px;">
+    <!-- ここに投稿されたコメントが追加されます -->
+  </div>
+
+</div>
+
+<script>
+  // ページ読み込み時に保存されたコメントを表示
+  document.addEventListener("DOMContentLoaded", loadComments);
+
+  function addComment() {
+    const nameInput = document.getElementById("comment-name");
+    const textInput = document.getElementById("comment-text");
+    
+    const name = nameInput.value.trim() || "匿名さん";
+    const text = textInput.value.trim();
+
+    if (!text) {
+      alert("コメントを入力してください！");
+      return;
+    }
+
+    const today = new Date();
+    const dateStr = today.getFullYear() + "/" + (today.getMonth() + 1) + "/" + today.getDate() + " " + today.getHours().toString().padStart(2, '0') + ":" + today.getMinutes().toString().padStart(2, '0');
+
+    const commentData = { name: name, text: text, date: dateStr };
+
+    // 保存処理
+    let comments = JSON.parse(localStorage.getItem("site_comments") || "[]");
+    comments.unshift(commentData); // 新しいものを上に追加
+    localStorage.setItem("site_comments", JSON.stringify(comments));
+
+    // フォームクリア
+    nameInput.value = "";
+    textInput.value = "";
+
+    // 画面再描画
+    renderComments(comments);
+  }
+
+  function loadComments() {
+    let comments = JSON.parse(localStorage.getItem("site_comments") || "[]");
+    
+    // 最初だけサンプルコメントを表示（空の場合）
+    if (comments.length === 0) {
+      comments = [
+        { name: "管理者", text: "軽井沢高速鉄道へのご意見・ご感想を気軽に書いてね！", date: "2026/8/11 21:00" }
+      ];
+    }
+    renderComments(comments);
+  }
+
+  function renderComments(comments) {
+    const list = document.getElementById("comment-list");
+    list.innerHTML = "";
+
+    comments.forEach(c => {
+      const item = document.createElement("div");
+      item.style.cssText = "background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0;";
+      item.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+          <strong style="color: #0f172a; font-size: 14px;">${escapeHTML(c.name)}</strong>
+          <span style="color: #94a3b8; font-size: 12px;">${c.date}</span>
+        </div>
+        <p style="margin: 0; color: #334155; font-size: 14px; line-height: 1.5; white-space: pre-wrap;">${escapeHTML(c.text)}</p>
+      `;
+      list.appendChild(item);
+    });
+  }
+
+  // 文字化け・安全対策用の関数
+  function escapeHTML(str) {
+    return str.replace(/[&<>'"]/g, 
+      tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+    );
+  }
+</script>
+
   <!-- フッター -->
   <footer>
     <p style="margin: 0 0 8px 0; font-weight: bold; color: #cbd5e1;">軽井沢高速鉄道 (Karuizawa Rapid Railway)</p>
