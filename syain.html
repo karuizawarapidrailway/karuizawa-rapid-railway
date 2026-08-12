@@ -18,15 +18,39 @@
       padding: 0 20px;
     }
     
-    /* 部署ごとの枠組み */
+    /* 🔍 検索エリアのスタイル */
+    .search-box-container {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 25px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .search-input {
+      width: 100%;
+      padding: 12px 16px;
+      font-size: 15px;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+    .search-input:focus {
+      border-color: #448aff;
+    }
+
+    /* 🏢 部署ごとの枠組み */
     .department-section {
       background: white;
       border-radius: 12px;
       padding: 25px;
       margin-bottom: 30px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      transition: opacity 0.2s ease;
     }
-    /* 部署タイトル */
     .department-title {
       font-size: 20px;
       color: #1a237e;
@@ -36,14 +60,25 @@
       margin-bottom: 20px;
     }
 
-    /* 役職ごとのサブ見出し */
+    /* 役職サブ見出し ＆ 人数バッジ（コツ3） */
     .sub-title {
       font-size: 15px;
       color: #334155;
       font-weight: bold;
-      margin: 15px 0 10px 0;
+      margin: 20px 0 10px 0;
       padding-left: 8px;
       border-left: 3px solid #94a3b8;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .count-badge {
+      font-size: 11px;
+      background: #e2e8f0;
+      color: #475569;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-weight: normal;
     }
 
     /* グリッド配置 */
@@ -53,9 +88,9 @@
       gap: 12px;
     }
 
-    /* 社員カード */
+    /* 社員カード ＆ ホバーアニメーション（コツ2） */
     .member-card {
-      background: #f8fafc;
+      background: #ffffff;
       border: 1px solid #e2e8f0;
       border-radius: 8px;
       padding: 12px 15px;
@@ -63,9 +98,14 @@
       align-items: center;
       justify-content: space-between;
       gap: 8px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .member-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.08);
     }
 
-    /* 複数タグを持つ特別なカード（はみ出し防止） */
+    /* 複数タグを持つカード */
     .member-card.multi-tag {
       flex-wrap: wrap;
     }
@@ -75,16 +115,24 @@
       flex-wrap: wrap;
     }
     
-    /* 役職タグ */
+    /* 役職タグ基本スタイル */
     .member-role {
       font-size: 11px;
       font-weight: bold;
-      color: #1565c0;
-      background: #e3f2fd;
-      padding: 2px 6px;
+      padding: 2px 8px;
       border-radius: 4px;
       white-space: nowrap;
     }
+
+    /* 🎨 役職別の色定義（コツ1） */
+    .role-exec-top { background: #ffebee; color: #c62828; } /* 社長 */
+    .role-exec-sub { background: #fff3e0; color: #ef6c00; } /* 副社長 */
+    .role-tech     { background: #e0f2fe; color: #0369a1; } /* 車両部 */
+    .role-operation{ background: #e8eaf6; color: #1a237e; } /* 運行部（運転士・車掌・駅員） */
+    .role-planning { background: #f3e8ff; color: #6b21a8; } /* 企画部 */
+    .role-web      { background: #e0e7ff; color: #3730a3; } /* Web課 */
+    .role-partner  { background: #fcf4dd; color: #854d0e; } /* パートナー・株主 */
+
     /* ユーザー名 */
     .member-name {
       font-size: 14px;
@@ -95,6 +143,11 @@
     .member-name:hover {
       color: #448aff;
       text-decoration: underline;
+    }
+
+    /* 検索非該当要素の非表示用クラス */
+    .is-hidden {
+      display: none !important;
     }
   </style>
 </head>
@@ -113,7 +166,12 @@
 
   <div class="container">
     <h1 style="font-size: 26px; color: #0f172a; margin-bottom: 10px;">👔 組織・社員紹介</h1>
-    <p style="color: #64748b; margin-bottom: 30px;">軽井沢高速鉄道を支えるスタッフ・関係者一覧です。</p>
+    <p style="color: #64748b; margin-bottom: 20px;">軽井沢高速鉄道を支えるスタッフ・関係者一覧です。</p>
+
+    <!-- 🔍 リアルタイム検索エリア（コツ4） -->
+    <div class="search-box-container">
+      <input type="text" id="memberSearch" class="search-input" placeholder="🔍 ユーザー名や役職で検索（例: @seibu, 車掌, Web課）">
+    </div>
 
     <!-- 🏢 1. 経営陣 -->
     <div class="department-section">
@@ -121,11 +179,11 @@
       <div class="member-grid">
         <div class="member-card">
           <a class="member-name" href="https://scratch.mit.edu/users/seibu2071f" target="_blank">@seibu2071f</a>
-          <span class="member-role" style="background:#ffebee; color:#c62828;">社長</span>
+          <span class="member-role role-exec-top">社長</span>
         </div>
         <div class="member-card">
           <a class="member-name" href="https://scratch.mit.edu/users/tyosakukennng" target="_blank">@tyosakukennng</a>
-          <span class="member-role" style="background:#fff3e0; color:#ef6c00;">副社長</span>
+          <span class="member-role role-exec-sub">副社長</span>
         </div>
       </div>
     </div>
@@ -134,15 +192,15 @@
     <div class="department-section">
       <h2 class="department-title">🔧 車両部</h2>
       <div class="member-grid">
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/scratch-383837" target="_blank">@scratch-383837</a><span class="member-role">車両部</span></div>
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/tyosakukennng" target="_blank">@tyosakukennng</a><span class="member-role">車両部</span></div>
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/hd22118" target="_blank">@hd22118</a><span class="member-role">車両部</span></div>
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/2025sanka" target="_blank">@2025sanka</a><span class="member-role">車両部</span></div>
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/that1142" target="_blank">@that1142</a><span class="member-role">車両部</span></div>
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/kuwagata347398" target="_blank">@kuwagata347398</a><span class="member-role">車両部</span></div>
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/E-K-K-Expless_233" target="_blank">@E-K-K-Expless_233</a><span class="member-role">車両部</span></div>
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/hamusuta-toreinn1207" target="_blank">@hamusuta-toreinn1207</a><span class="member-role">車両部</span></div>
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/Nagano1590" target="_blank">@Nagano1590</a><span class="member-role">車両部</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/scratch-383837" target="_blank">@scratch-383837</a><span class="member-role role-tech">車両部</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/tyosakukennng" target="_blank">@tyosakukennng</a><span class="member-role role-tech">車両部</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/hd22118" target="_blank">@hd22118</a><span class="member-role role-tech">車両部</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/2025sanka" target="_blank">@2025sanka</a><span class="member-role role-tech">車両部</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/that1142" target="_blank">@that1142</a><span class="member-role role-tech">車両部</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/kuwagata347398" target="_blank">@kuwagata347398</a><span class="member-role role-tech">車両部</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/E-K-K-Expless_233" target="_blank">@E-K-K-Expless_233</a><span class="member-role role-tech">車両部</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/hamusuta-toreinn1207" target="_blank">@hamusuta-toreinn1207</a><span class="member-role role-tech">車両部</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/Nagano1590" target="_blank">@Nagano1590</a><span class="member-role role-tech">車両部</span></div>
       </div>
     </div>
 
@@ -150,49 +208,50 @@
     <div class="department-section">
       <h2 class="department-title">🚆 運行部</h2>
       
-      <div class="sub-title">運転士</div>
+      <!-- コツ3: 人数カウントバッジ -->
+      <div class="sub-title">運転士 <span class="count-badge">16名</span></div>
       <div class="member-grid">
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/kakapi_dayo" target="_blank">@kakapi_dayo</a><span class="member-role">運転士</span></div>
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/tchibineko" target="_blank">@tchibineko</a><span class="member-role">運転士</span></div>
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/yetx-b" target="_blank">@yetx-b</a><span class="member-role">運転士</span></div>
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/tetudo_anime" target="_blank">@tetudo_anime</a><span class="member-role">運転士</span></div>
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/TOBU_N100" target="_blank">@TOBU_N100</a><span class="member-role">運転士</span></div>
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/METORO2000" target="_blank">@METORO2000</a><span class="member-role">運転士</span></div>
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/sukarenziman" target="_blank">@sukarenziman</a><span class="member-role">運転士</span></div>
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/Scratch19283" target="_blank">@Scratch19283</a><span class="member-role">運転士</span></div>
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/yossi-curakka-" target="_blank">@yossi-curakka-</a><span class="member-role">運転士</span></div>
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/degigaku19" target="_blank">@degigaku19</a><span class="member-role">運転士</span></div>
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/iteensibatakousei" target="_blank">@iteensibatakousei</a><span class="member-role">運転士</span></div>
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/jr-k" target="_blank">@jr-k</a><span class="member-role">運転士</span></div>
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/Funabashia" target="_blank">@Funabashia</a><span class="member-role">運転士</span></div>
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/kumachian" target="_blank">@kumachian</a><span class="member-role">運転士</span></div>
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/joban5858" target="_blank">@joban5858</a><span class="member-role">運転士</span></div>
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/e231-tmr" target="_blank">@e231-tmr</a><span class="member-role">運転士</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/kakapi_dayo" target="_blank">@kakapi_dayo</a><span class="member-role role-operation">運転士</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/tchibineko" target="_blank">@tchibineko</a><span class="member-role role-operation">運転士</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/yetx-b" target="_blank">@yetx-b</a><span class="member-role role-operation">運転士</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/tetudo_anime" target="_blank">@tetudo_anime</a><span class="member-role role-operation">運転士</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/TOBU_N100" target="_blank">@TOBU_N100</a><span class="member-role role-operation">運転士</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/METORO2000" target="_blank">@METORO2000</a><span class="member-role role-operation">運転士</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/sukarenziman" target="_blank">@sukarenziman</a><span class="member-role role-operation">運転士</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/Scratch19283" target="_blank">@Scratch19283</a><span class="member-role role-operation">運転士</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/yossi-curakka-" target="_blank">@yossi-curakka-</a><span class="member-role role-operation">運転士</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/degigaku19" target="_blank">@degigaku19</a><span class="member-role role-operation">運転士</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/iteensibatakousei" target="_blank">@iteensibatakousei</a><span class="member-role role-operation">運転士</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/jr-k" target="_blank">@jr-k</a><span class="member-role role-operation">運転士</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/Funabashia" target="_blank">@Funabashia</a><span class="member-role role-operation">運転士</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/kumachian" target="_blank">@kumachian</a><span class="member-role role-operation">運転士</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/joban5858" target="_blank">@joban5858</a><span class="member-role role-operation">運転士</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/e231-tmr" target="_blank">@e231-tmr</a><span class="member-role role-operation">運転士</span></div>
       </div>
 
-      <div class="sub-title">車掌</div>
+      <div class="sub-title">車掌 <span class="count-badge">3名</span></div>
       <div class="member-grid">
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/yetx-b" target="_blank">@yetx-b</a><span class="member-role">車掌</span></div>
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/tibaminato" target="_blank">@tibaminato</a><span class="member-role">車掌</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/yetx-b" target="_blank">@yetx-b</a><span class="member-role role-operation">車掌</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/tibaminato" target="_blank">@tibaminato</a><span class="member-role role-operation">車掌</span></div>
         <div class="member-card multi-tag">
           <a class="member-name" href="https://scratch.mit.edu/users/dokozonotoritetu" target="_blank">@dokozonotoritetu</a>
           <div class="role-group">
-            <span class="member-role">車掌</span>
-            <span class="member-role" style="background:#e8eaf6; color:#1a237e;">灘急行電鉄 社長</span>
+            <span class="member-role role-operation">車掌</span>
+            <span class="member-role role-exec-top">灘急行 社長</span>
           </div>
         </div>
       </div>
 
-      <div class="sub-title">駅員</div>
+      <div class="sub-title">駅員 <span class="count-badge">8名</span></div>
       <div class="member-grid">
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/shin5ki" target="_blank">@shin5ki</a><span class="member-role">駅員</span></div>
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/00900114" target="_blank">@00900114</a><span class="member-role">駅員</span></div>
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/toukaidou-231-1000-3" target="_blank">@toukaidou-231-1000-3</a><span class="member-role">駅員</span></div>
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/1-2-3-4-5-aa-sub" target="_blank">@1-2-3-4-5-aa-sub</a><span class="member-role">駅員</span></div>
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/uq_uq" target="_blank">@uq_uq</a><span class="member-role">駅員</span></div>
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/813kei_daisuki" target="_blank">@813kei_daisuki</a><span class="member-role">駅員</span></div>
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/Dream_Time209-500" target="_blank">@Dream_Time209-500</a><span class="member-role">駅員</span></div>
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/torinikudaisuki78" target="_blank">@torinikudaisuki78</a><span class="member-role">駅員</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/shin5ki" target="_blank">@shin5ki</a><span class="member-role role-operation">駅員</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/00900114" target="_blank">@00900114</a><span class="member-role role-operation">駅員</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/toukaidou-231-1000-3" target="_blank">@toukaidou-231-1000-3</a><span class="member-role role-operation">駅員</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/1-2-3-4-5-aa-sub" target="_blank">@1-2-3-4-5-aa-sub</a><span class="member-role role-operation">駅員</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/uq_uq" target="_blank">@uq_uq</a><span class="member-role role-operation">駅員</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/813kei_daisuki" target="_blank">@813kei_daisuki</a><span class="member-role role-operation">駅員</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/Dream_Time209-500" target="_blank">@Dream_Time209-500</a><span class="member-role role-operation">駅員</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/torinikudaisuki78" target="_blank">@torinikudaisuki78</a><span class="member-role role-operation">駅員</span></div>
       </div>
     </div>
 
@@ -200,24 +259,24 @@
     <div class="department-section">
       <h2 class="department-title">💡 企画部</h2>
       
-      <div class="sub-title">企画メンバー</div>
+      <div class="sub-title">企画メンバー <span class="count-badge">7名</span></div>
       <div class="member-grid">
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/ghyw00002036" target="_blank">@ghyw00002036</a><span class="member-role">企画部</span></div>
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/eita-bianca" target="_blank">@eita-bianca</a><span class="member-role">企画部</span></div>
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/2025sanka" target="_blank">@2025sanka</a><span class="member-role">企画部</span></div>
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/eiokata" target="_blank">@eiokata</a><span class="member-role">企画部</span></div>
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/Bhy____" target="_blank">@Bhy____</a><span class="member-role">企画部</span></div>
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/cat_train0324" target="_blank">@cat_train0324</a><span class="member-role">企画部</span></div>
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/keta0218" target="_blank">@keta0218</a><span class="member-role">企画部</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/ghyw00002036" target="_blank">@ghyw00002036</a><span class="member-role role-planning">企画部</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/eita-bianca" target="_blank">@eita-bianca</a><span class="member-role role-planning">企画部</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/2025sanka" target="_blank">@2025sanka</a><span class="member-role role-planning">企画部</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/eiokata" target="_blank">@eiokata</a><span class="member-role role-planning">企画部</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/Bhy____" target="_blank">@Bhy____</a><span class="member-role role-planning">企画部</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/cat_train0324" target="_blank">@cat_train0324</a><span class="member-role role-planning">企画部</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/keta0218" target="_blank">@keta0218</a><span class="member-role role-planning">企画部</span></div>
       </div>
 
-      <div class="sub-title">🌐 Web課</div>
+      <div class="sub-title">🌐 Web課 <span class="count-badge">5名</span></div>
       <div class="member-grid">
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/1-2-3-4-5-aa" target="_blank">@1-2-3-4-5-aa</a><span class="member-role" style="background:#e0f2fe; color:#0369a1;">Web課</span></div>
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/1-2-3-4-5-aa-sub" target="_blank">@1-2-3-4-5-aa-sub</a><span class="member-role" style="background:#e0f2fe; color:#0369a1;">Web課</span></div>
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/TOBU_N100" target="_blank">@TOBU_N100</a><span class="member-role" style="background:#e0f2fe; color:#0369a1;">Web課</span></div>
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/torinikudaisuki78" target="_blank">@torinikudaisuki78</a><span class="member-role" style="background:#e0f2fe; color:#0369a1;">Web課</span></div>
-        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/tyosakukennng" target="_blank">@tyosakukennng</a><span class="member-role" style="background:#e0f2fe; color:#0369a1;">Web課</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/1-2-3-4-5-aa" target="_blank">@1-2-3-4-5-aa</a><span class="member-role role-web">Web課</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/1-2-3-4-5-aa-sub" target="_blank">@1-2-3-4-5-aa-sub</a><span class="member-role role-web">Web課</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/TOBU_N100" target="_blank">@TOBU_N100</a><span class="member-role role-web">Web課</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/torinikudaisuki78" target="_blank">@torinikudaisuki78</a><span class="member-role role-web">Web課</span></div>
+        <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/tyosakukennng" target="_blank">@tyosakukennng</a><span class="member-role role-web">Web課</span></div>
       </div>
     </div>
 
@@ -227,11 +286,11 @@
       <div class="member-grid">
         <div class="member-card">
           <a class="member-name" href="https://scratch.mit.edu/users/odakyu0908" target="_blank">@odakyu0908</a>
-          <span class="member-role" style="background:#f3e5f5; color:#7b1fa2;">長急派遣社員</span>
+          <span class="member-role role-partner">長急派遣社員</span>
         </div>
         <div class="member-card">
           <a class="member-name" href="https://scratch.mit.edu/users/TOBU_N100" target="_blank">@TOBU_N100</a>
-          <span class="member-role" style="background:#fff8e1; color:#f57f17;">株主</span>
+          <span class="member-role role-partner">株主</span>
         </div>
       </div>
     </div>
@@ -242,6 +301,48 @@
     </div>
 
   </div>
+
+  <!-- ⚡ リアルタイム検索JS -->
+  <script>
+    const searchInput = document.getElementById('memberSearch');
+    const memberCards = document.querySelectorAll('.member-card');
+    const memberGrids = document.querySelectorAll('.member-grid');
+
+    searchInput.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase().trim();
+
+      memberCards.forEach(card => {
+        const text = card.textContent.toLowerCase();
+        if (text.includes(query)) {
+          card.classList.remove('is-hidden');
+        } else {
+          card.classList.add('is-hidden');
+        }
+      });
+
+      memberGrids.forEach(grid => {
+        const visibleCards = grid.querySelectorAll('.member-card:not(.is-hidden)');
+        const subTitle = grid.previousElementSibling;
+        
+        if (subTitle && subTitle.classList.contains('sub-title')) {
+          if (visibleCards.length === 0) {
+            subTitle.classList.add('is-hidden');
+          } else {
+            subTitle.classList.remove('is-hidden');
+          }
+        }
+      });
+
+      document.querySelectorAll('.department-section').forEach(section => {
+        const visibleCardsInSection = section.querySelectorAll('.member-card:not(.is-hidden)');
+        if (visibleCardsInSection.length === 0) {
+          section.classList.add('is-hidden');
+        } else {
+          section.classList.remove('is-hidden');
+        }
+      });
+    });
+  </script>
 
 </body>
 </html>
