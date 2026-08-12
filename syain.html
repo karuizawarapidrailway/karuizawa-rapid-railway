@@ -64,6 +64,16 @@
       justify-content: space-between;
       gap: 8px;
     }
+
+    /* 複数タグを持つ特別なカード（はみ出し防止） */
+    .member-card.multi-tag {
+      flex-wrap: wrap;
+    }
+    .role-group {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
     
     /* 役職タグ */
     .member-role {
@@ -164,9 +174,12 @@
       <div class="member-grid">
         <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/yetx-b" target="_blank">@yetx-b</a><span class="member-role">車掌</span></div>
         <div class="member-card"><a class="member-name" href="https://scratch.mit.edu/users/tibaminato" target="_blank">@tibaminato</a><span class="member-role">車掌</span></div>
-        <div class="member-card">
+        <div class="member-card multi-tag">
           <a class="member-name" href="https://scratch.mit.edu/users/dokozonotoritetu" target="_blank">@dokozonotoritetu</a>
-          <span class="member-role" style="background:#e8eaf6; color:#1a237e;">車掌（灘急行電鉄 社長）</span>
+          <div class="role-group">
+            <span class="member-role">車掌</span>
+            <span class="member-role" style="background:#e8eaf6; color:#1a237e;">灘急行電鉄 社長</span>
+          </div>
         </div>
       </div>
 
